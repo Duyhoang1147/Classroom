@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true},
     classJoin: [{type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true}],
     ClassCreate: [{type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true}],
+    isdelete: {type: Boolean, default: false},
     
 },{
     timestamps: true,
