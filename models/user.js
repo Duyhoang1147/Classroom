@@ -21,12 +21,4 @@ userSchema.pre('save', async function async (next) {
   }catch(error){ return next(error); }
 });
 
-//method
-userSchema.methods.comparePassword = async function(candidatePassword) {
-  try{
-    return await bcrypt.compare(candidatePassword, this.password);
-    
-  }catch(error){ return false; }
-}
-
 module.exports = moogoose.model('User', userSchema);
