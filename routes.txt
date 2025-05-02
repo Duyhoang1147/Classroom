@@ -1,0 +1,32 @@
+User
+Get
+http://localhost:3000/api/user/
+http://localhost:3000/api/user/:id
+
+Post
+http://localhost:3000/api/user/ (username, password, email, roleid)
+
+Put
+http://localhost:3000/api/user/update/:id
+http://localhost:3000/api/user/delete/:id
+http://localhost:3000/api/user/restore/:id
+
+Delete
+http://localhost:3000/api/user/:id
+
+
+Role
+Get
+http://localhost:3000/api/roles/
+http://localhost:3000/api/roles/:id
+
+Post
+http://localhost:3000/api/roles/ (roleName) eidt res
+
+Put
+http://localhost:3000/api/roles/update/:id
+http://localhost:3000/api/roles/delete/:id
+http://localhost:3000/api/roles/remove/:id
+
+delete
+http://localhost:3000/api/roles/:id

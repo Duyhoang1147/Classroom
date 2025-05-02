@@ -29,6 +29,8 @@ exports.getRolebyId = async (req, res) => {
 exports.createRole = async (req, res) => {
     const { roleName } = req.body;
     try {
+        const existingRole = await Role.findOne({ roleName: roleName });
+        if (existingRole) return res.status(400).json({ message: 'Role already exists' });
         const newRole = await Role.create({ roleName });
         res.status(201).json(newRole);
     } catch (error) {
@@ -41,9 +43,9 @@ exports.updateRole = async (req, res) => {
     const { roleName } = req.body;
     try {
         await Role.findByIdAndUpdate(id, { roleName }, { new: true });
-        res.status(200).json(updatedRole);
+        res.status(200).json({message: 'Role updated successfully'});
     } catch (error) {
-        res.status(500).json({ message: 'Error updating role', error });
+        res.status(500).json({ message: 'Error updating role: ' + error });
     }
 };
 

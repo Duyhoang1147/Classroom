@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const roleSchema = new mongoose.Schema({
-    roleName: { type: String, required: true },
+    roleName: { type: String, required: true, unique: true },
     isdeleted: { type: Boolean, default: false },
 },{
     timestamps: true,
 });
 
-moodule.exports = mongoose.model('Role', roleSchema);
+module.exports = mongoose.model('Role', roleSchema);

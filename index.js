@@ -1,6 +1,7 @@
 const express = require('express');
 
-const conectDB = require('./database/connectDB'); // Adjust the path as necessary
+const conectDB = require('./database/connectDB');
+const errorHandler = require('./middleware/databaseError');
 
 const app = express();
 const port = 3000;
@@ -10,6 +11,11 @@ conectDB()
 // Middleware for parsing JSON and urlencoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(errorHandler);
+
+//routers
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/roles', require('./routes/roleRoutes'));
 
 // Basic route
 app.get('/', (req, res) => {

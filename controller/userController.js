@@ -5,7 +5,7 @@ const checkUsername = require('../utils/checkUserById');
 //Get all users
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({ isdeleted: false }).populate('role');
+        const users = await User.find({ isdeleted: false }).populate('role', 'roleName');
         if (users.length === 0) {
             return res.status(404).json({ message: 'No users found' });
         }
@@ -19,13 +19,13 @@ exports.getAllUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
     const { id } = req.params;
     try {
-        const user = await User.findOne({ _id: id, isdeleted: false }).populate('role');
+        const user = await User.findOne({ _id: id, isdeleted: false }).populate('role', 'roleName');
         if (user === null) {
             return res.status(404).json({ message: 'User not found' });
         }
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching user', error });
+        res.status(500).json({ message: 'Error fetching user' + error });
     }
 };
 
@@ -33,21 +33,24 @@ exports.getUserById = async (req, res) => {
 exports.createUser = async (req, res) => {
     const {username, password, email, roleid} = req.body;
     try {
+        console.log('start');
         //check data input
-        const existingEmail = await User.findOne({ email });
-        if(existingEmail.length > 0) {
+        const existingEmail = await User.findOne({ email: email });
+        if(existingEmail !== null) {
             return res.status(400).json({ message: 'Email already exists' });
         }
+        console.log('existingEmail');
 
         if(await checkUsername(username) === false) {
             return res.status(400).json({ message: 'Invalid username' });
         }
+        console.log('checkUsername');
         //create user
         await User.create({ username: username, password: password, email: email, role: roleid });
 
         res.status(201).json({message: 'User created successfully'});
     } catch (error) {
-        res.status(500).json({ message: 'Error creating user', error });
+        res.status(500).json({ message: 'Error creating user' + error });
     }
 }
 
@@ -74,7 +77,7 @@ exports.deleteUser = async (req, res) => {
         if (deletedUser === null) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json(deletedUser);
+        res.status(200).json({message: 'User deleted successfully'});
     } catch (error) {
         res.status(500).json({ message: 'Error deleting user', error });
     }
@@ -102,7 +105,7 @@ exports.restoreUser = async (req, res) => {
         if (restoredUser === null) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json(restoredUser);
+        res.status(200).json({message: 'User restored successfully'});
     }  catch (error) {
         res.status(500).json({ message: 'Error restoring user', error });
     }
