@@ -1,6 +1,7 @@
 {
   "name": "classroom",
   "version": "1.0.0",
+  "types": "module",
   "description": "classroom web",
   "homepage": "https://github.com/Duyhoang1147/Classroom.git'#readme",
   "bugs": {
