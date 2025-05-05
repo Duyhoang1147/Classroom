@@ -1,4 +1,5 @@
 const moogoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new moogoose.Schema({
     username: {type: String, required: true},
